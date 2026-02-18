@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_18_184531) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_18_194240) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -24,6 +24,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_18_184531) do
     t.string "event_type", null: false
     t.datetime "github_created_at"
     t.jsonb "payload", default: {}, null: false
+    t.jsonb "raw_payload", null: false
     t.bigint "repo_id"
     t.string "repo_name"
     t.datetime "updated_at", null: false
@@ -33,4 +34,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_18_184531) do
     t.index ["event_type"], name: "index_github_events_on_event_type"
     t.index ["github_created_at"], name: "index_github_events_on_github_created_at"
   end
+
+  create_table "push_events", force: :cascade do |t|
+    t.string "before", null: false
+    t.datetime "created_at", null: false
+    t.bigint "github_event_id", null: false
+    t.string "head", null: false
+    t.string "push_id", null: false
+    t.string "ref", null: false
+    t.bigint "repository_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["before"], name: "index_push_events_on_before"
+    t.index ["github_event_id"], name: "index_push_events_on_github_event_id"
+    t.index ["head"], name: "index_push_events_on_head"
+    t.index ["push_id"], name: "index_push_events_on_push_id"
+    t.index ["ref"], name: "index_push_events_on_ref"
+    t.index ["repository_id"], name: "index_push_events_on_repository_id"
+  end
+
+  add_foreign_key "push_events", "github_events"
 end

@@ -4,4 +4,6 @@ Rails.application.routes.draw do
       post :fetch
     end
   end
+  
+  resources :push_events, only: [:index, :show]
 end
