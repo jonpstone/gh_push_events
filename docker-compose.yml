@@ -1,4 +1,11 @@
 services:
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
   web:
     build:
       context: ./
@@ -7,4 +14,11 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/gh_push_events_development
     command: rails s -b 0.0.0.0
+
+volumes:
+  postgres_data:
