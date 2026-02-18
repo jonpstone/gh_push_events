@@ -1,0 +1,21 @@
+class GithubEvent < ApplicationRecord
+  validates :event_id, presence: true, uniqueness: true
+  validates :event_type, presence: true
+  validates :payload, presence: true
+
+  scope :by_type, ->(type) { where(event_type: type) }
+  scope :recent, -> { order(github_created_at: :desc) }
+  scope :since, ->(datetime) { where("github_created_at > ?", datetime) }
+
+  def self.from_github_api(event_data)
+    find_or_create_by(event_id: event_data['id']) do |record|
+      record.event_type = event_data['type']
+      record.actor_login = event_data.dig('actor', 'login')
+      record.actor_avatar_url = event_data.dig('actor', 'avatar_url')
+      record.repo_name = event_data.dig('repo', 'name')
+      record.repo_id = event_data.dig('repo', 'id')
+      record.payload = event_data['payload']
+      record.github_created_at = event_data['created_at']
+    end
+  end
+end

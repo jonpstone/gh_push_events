@@ -10,8 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 0) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_18_184531) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "github_events", force: :cascade do |t|
+    t.string "actor_avatar_url"
+    t.bigint "actor_id"
+    t.string "actor_login"
+    t.string "actor_type"
+    t.datetime "created_at", null: false
+    t.string "event_id", null: false
+    t.string "event_type", null: false
+    t.datetime "github_created_at"
+    t.jsonb "payload", default: {}, null: false
+    t.bigint "repo_id"
+    t.string "repo_name"
+    t.datetime "updated_at", null: false
+    t.index ["actor_type", "actor_id"], name: "index_github_events_on_actor"
+    t.index ["event_id", "event_type"], name: "index_github_events_on_event_id_and_event_type"
+    t.index ["event_id"], name: "index_github_events_on_event_id"
+    t.index ["event_type"], name: "index_github_events_on_event_type"
+    t.index ["github_created_at"], name: "index_github_events_on_github_created_at"
+  end
 end
