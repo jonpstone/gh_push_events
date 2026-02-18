@@ -19,7 +19,7 @@ class GithubEventsController < ApplicationController
     render json: @events
   end
 
-  def show
-    @event = GithubEvent.find(params[:id])
-  end
+  # def show
+  #   @event = GithubEvent.find(params[:id])
+  # end
 end

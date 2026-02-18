@@ -19,6 +19,7 @@ class GithubEventsFetcher
     
     if response.code == '200'
       events = JSON.parse(response.body)
+      events = events.select { |event| event["type"] == "PushEvent"}
       events.each { |event| GithubEvent.from_github_api(event) }
       { success: true, count: events.count }
     else
