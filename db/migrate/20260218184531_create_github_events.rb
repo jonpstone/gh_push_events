@@ -3,14 +3,17 @@ class CreateGithubEvents < ActiveRecord::Migration[7.1]
     create_table :github_events do |t|
       t.string :event_id, null: false, index: true
       t.string :event_type, null: false, index: true
-      t.references :actor, polymorphic: true, null: true
+      t.references :actor, polymorphic: true, null: true # come back to this
       t.string :actor_login
       t.string :actor_avatar_url
-      
       t.string :repo_name
       t.bigint :repo_id
       
+      # Parsed
       t.jsonb :payload, default: {}, null: false
+      
+      # RAW
+      t.jsonb :raw_payload, null: false
       
       t.datetime :github_created_at, index: true
       t.datetime :created_at, null: false
