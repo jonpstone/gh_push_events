@@ -31,6 +31,7 @@ gem "solid_queue"
 gem "solid_cable"
 
 # Cron/Worker
+gem 'connection_pool', '~> 2.4'
 gem 'sidekiq', '~> 7.0'
 
 # Reduces boot times through caching; required in config/boot.rb
