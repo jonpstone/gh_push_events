@@ -24,7 +24,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_18_184531) do
     t.string "event_type", null: false
     t.datetime "github_created_at"
     t.jsonb "payload", default: {}, null: false
-    t.jsonb "raw_payload", null: false
     t.bigint "repo_id"
     t.string "repo_name"
     t.datetime "updated_at", null: false
