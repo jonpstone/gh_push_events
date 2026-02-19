@@ -21,7 +21,7 @@ class EnrichPushEventService
     actor = enrich_actor(actor_data)
     repository = enrich_repository(repo_data)
 
-    push_event.update(
+    push_event.update!(
       actor: actor,
       repository: repository,
       enriched_at: Time.current
