@@ -37,6 +37,8 @@ class GithubEvent < ApplicationRecord
       push_event = PushEvent.create_from_github_event(self)
       unless push_event.persisted?
         Rails.logger.error("Failed to create PushEvent for GithubEvent #{id}: #{push_event.errors.full_messages}")
+      else
+        EnrichPushEventsJob.perform_async(1)
       end
     end
   end

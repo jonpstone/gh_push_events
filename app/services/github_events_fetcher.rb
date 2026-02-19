@@ -15,11 +15,6 @@ class GithubEventsFetcher
 
     request = Net::HTTP::Get.new(uri)
     request['User-Agent'] = 'GithubEventsApp'
-    
-    if ENV['GITHUB_TOKEN']
-      request['Authorization'] = "token #{ENV['GITHUB_TOKEN']}"
-    end
-
     response = http.request(request)
     
     if response.code == '200'
