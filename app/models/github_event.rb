@@ -9,7 +9,7 @@ class GithubEvent < ApplicationRecord
   scope :recent, -> { order(github_created_at: :desc) }
   scope :since, ->(datetime) { where("github_created_at > ?", datetime) }
 
-  after_create :create_push_event_if_push_type
+  after_create :create_push_event_and_queue_enrichment
 
   def self.from_github_api(event_data)
     return nil if event_data.blank?
@@ -32,14 +32,10 @@ class GithubEvent < ApplicationRecord
 
   private
 
-  def create_push_event_if_push_type
+  def create_push_event_and_queue_enrichment
     if event_type == 'PushEvent'
-      push_event = PushEvent.create_from_github_event(self)
-      unless push_event.persisted?
-        Rails.logger.error("Failed to create PushEvent for GithubEvent #{id}: #{push_event.errors.full_messages}")
-      else
-        EnrichPushEventsJob.perform_async(1)
-      end
+      PushEvent.create_from_github_event(self)
+      EnrichPushEventsJob.perform_async(1)
     end
   end
 end
