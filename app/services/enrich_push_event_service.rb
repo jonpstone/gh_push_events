@@ -54,7 +54,7 @@ class EnrichPushEventService
   def enrich_actor(actor_data)
     return nil if actor_data.blank?
 
-    actor = Actor.find_or_create_from_payload(actor_data)
+    actor = ::Actor.find_or_create_from_payload(actor_data)
     return actor unless actor.should_enrich?
 
     fetch_and_update_actor(actor, actor_data['url'])
@@ -67,7 +67,7 @@ class EnrichPushEventService
   def enrich_repository(repo_data)
     return nil if repo_data.blank?
 
-    repository = Repository.find_or_create_from_payload(repo_data)
+    repository = ::Repository.find_or_create_from_payload(repo_data)
     return repository unless repository.should_enrich?
 
     fetch_and_update_repository(repository, repo_data['url'])
