@@ -1,4 +1,4 @@
-class CreatePushEvents < ActiveRecord::Migration[7.1]
+class CreatePushEvents < ActiveRecord::Migration[8.1]
   def change
     create_table :push_events do |t|
       t.references :github_event, null: false, foreign_key: true, index: true

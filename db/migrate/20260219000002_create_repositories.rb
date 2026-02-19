@@ -1,4 +1,4 @@
-class CreateRepositories < ActiveRecord::Migration[8.1]
+class CreateRepositories < ActiveRecord::Migration[7.1]
   def change
     create_table :repositories do |t|
       t.bigint :github_id, null: false, index: { unique: true }

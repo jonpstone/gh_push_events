@@ -1,4 +1,4 @@
-class CreateGithubEvents < ActiveRecord::Migration[7.1]
+class CreateGithubEvents < ActiveRecord::Migration[8.1]
   def change
     create_table :github_events do |t|
       t.references :actor, polymorphic: true, null: true
@@ -22,3 +22,4 @@ class CreateGithubEvents < ActiveRecord::Migration[7.1]
     add_index :github_events, [:event_id, :event_type]
   end
 end
+
