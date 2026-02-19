@@ -12,6 +12,7 @@ class CreateActors < ActiveRecord::Migration[8.1]
       t.string :twitter_username
       t.integer :followers
       t.integer :following
+      t.integer :failed_attempts
       t.datetime :github_created_at
       t.datetime :github_updated_at
       t.string :avatar_url
