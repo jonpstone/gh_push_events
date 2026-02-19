@@ -12,7 +12,8 @@ class CreateGithubEvents < ActiveRecord::Migration[7.1]
       t.bigint :repo_id
       
       t.jsonb :payload, default: {}, null: false
-      
+      t.jsonb :raw_payload, null: false
+
       t.datetime :github_created_at, index: true
       t.datetime :created_at, null: false
       t.datetime :updated_at, null: false
